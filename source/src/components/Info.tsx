@@ -3,6 +3,7 @@ import { Component } from 'react'
 import { render } from 'react-dom'
 import { Menu, Button } from 'antd';
 import { Header, Icon, Image } from 'semantic-ui-react'
+import { DownloadOutlined, GithubOutlined, LinkedinOutlined, PrinterOutlined } from '@ant-design/icons';
 
 declare let require: any;
 
@@ -20,7 +21,10 @@ export class Info extends Component<any, any> {
     }
 
 
+    public onPrint = () => {
+        window.print();
 
+    }
 
     render() {
 
@@ -28,17 +32,33 @@ export class Info extends Component<any, any> {
         return (
             <div className="info">
                 <div className="info-title">
-                    <span style={{ fontWeight: "bold" }}>Nattapat  Ekapobyothin</span>
+                    <h1 className="typewriter" style={{ fontWeight: "bold" }}>Nattapat  Ekapobyothin</h1>
                     <br />
                     <div style={{ color: "#bcbcbc", fontSize: 18, marginTop: 10 }}>
                         <span className="text-bold">E-mail:</span> nattapat.ek@gmail.com <span className="text-bold">Line:</span> neogonn
                     </div>
-                    <div style={{ color: "#bcbcbc", fontSize: 18 }}>
+                    <div style={{ color: "#bcbcbc", fontSize: 18, marginTop: 10 }}>
                         <span className="text-bold">Tel:</span> 087-5495690
                     </div>
-                    <div style={{ color: "#bcbcbc", fontSize: 18 }}>
-                        <span className="text-bold">Github:</span> https://github.com/nattapatee
+                    <div style={{ marginTop: 10 }}>
+
+                        <a href="https://github.com/nattapatee" target="_blank">
+                            <Button type="link" shape="round" icon={<GithubOutlined />} style={{ marginRight: 5 }}>
+                                Github
+                            </Button>
+                        </a>
+
+                        <a href="https://www.linkedin.com/in/nattapat-ekapobyothin-4967a3200/" target="_blank">
+                            <Button type="link" shape="round" icon={<LinkedinOutlined />} style={{ marginRight: 5 }}>
+                                LinkedIn
+                            </Button>
+                        </a>
+
+                        {/* <Button type= shape="round" icon={<DownloadOutlined />} >
+                            Print
+                        </Button> */}
                     </div>
+
                 </div>
                 <div className="Skill-Box" style={{ marginTop: 40 }}>
                     <Header as='h3'>
@@ -49,7 +69,7 @@ export class Info extends Component<any, any> {
                     </Header>
                     <hr />
                     <div className="skill-text">
-                        Looking for new job as Frontend Developer
+                        Looking for new job as Frontend Developer or Software Developer
                     </div>
                 </div>
 
@@ -115,16 +135,16 @@ export class Info extends Component<any, any> {
                     <hr />
                     <div className="skill-text">
                         <div>
-                        <span className="text-bold">Programming Languages:</span> JavaScript, TypeScript, C#, VB.NET, SQL
+                            <span className="text-bold">Programming Languages:</span> JavaScript, TypeScript, C#, VB.NET, SQL
                         </div>
                         <div>
-                        <span className="text-bold">Technologies:</span> Docker, Alfresco, Node.js, Keycloak, SQL, PDF.js, WebTwain.
+                            <span className="text-bold">Technologies:</span> Docker, Alfresco, Node.js, Keycloak, SQL, PDF.js, WebTwain.
                         </div>
                         <div>
-                        <span className="text-bold">Framework & Libraries:</span>  React, Vue.Js ,JQuery, ASP.NET Core, Entity Framework, SignalR, NSwag.
+                            <span className="text-bold">Framework & Libraries:</span>  React, Vue.Js ,JQuery, ASP.NET Core, Entity Framework, SignalR, NSwag.
                         </div>
                         <div>
-                        <span className="text-bold">Tools:</span> GIT Version Control,  Github Action, VSCode, Visual Studio, Sublime, Azure Devops, IIS, Cake Build, Jira, Basecamp.
+                            <span className="text-bold">Tools:</span> GIT Version Control,  Github Action, VSCode, Visual Studio, Sublime, Azure Devops, IIS, Cake Build, Jira, Basecamp.
                         </div>
                     </div>
                 </div>
@@ -139,7 +159,7 @@ export class Info extends Component<any, any> {
                     <hr />
                     <div className="skill-text">
                         <div>
-                        Solfware Developer at <span className="text-bold">B Circle Co., Ltd.</span> (March 2019 - Present).
+                            Solfware Developer at <span className="text-bold">B Circle Co., Ltd.</span> (March 2019 - Present).
                         </div>
                         <ul>
                             <li>Develop Scan service Report web application for client company such as DHL, Isuzu and TIP Insure.</li>
@@ -150,8 +170,13 @@ export class Info extends Component<any, any> {
                             <li>Develop Alfresco workflow Report, Mass approve web application and Keycloak login page for client company such as PTT OR.</li>
                             <li>Taught interns.</li>
                         </ul>
-                       
+
                     </div>
+                </div>
+                <div style={{ width: "100%", textAlign: "center" }}>
+                    <Button className="btn-print" onClick={this.onPrint} shape="round" icon={<PrinterOutlined />} >
+                        Print
+                    </Button>
                 </div>
                 <br />
 

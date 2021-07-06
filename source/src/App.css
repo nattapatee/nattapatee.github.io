@@ -4,9 +4,40 @@ body {
   font-family: 'Quicksand', sans-serif !important;
 }
 
+.typewriter {
+  font-family: 'Quicksand', sans-serif !important;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(20, end),
+    blink-caret .75s step-end infinite;
+    width: 400px;
+}
+
+/* The typing effect */
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 400px }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange }
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.btn-print {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -17,13 +48,15 @@ body {
 
 .info {
   background-color: white;
-  width: 1000px;
+  max-width: 1000px;
   /* height: 100vw; */
   margin-left: auto;
   margin-right: auto;
   padding-top: 120px;
   padding-left: 20px;
     padding-right: 20px;
+    transition: width 0.5s, height 0.5s;
+
 }
 
 hr {
@@ -33,6 +66,21 @@ hr {
 .info-title {
   text-align: center;
   font-size: 22px;
+}
+
+@media only screen and (max-width: 405px) {
+  .info-title {
+    text-align: center;
+    font-size: 16px;
+  }
+  .skill-text {
+    font-size: 12px;
+  }
+  .info {
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+
 }
 
 
@@ -68,6 +116,8 @@ hr {
   margin-right: auto;
   position: relative;
   top: 100px;
+  transition: width 0.5s, height 0.5s;
+
 }
 
 .profile-banner {
