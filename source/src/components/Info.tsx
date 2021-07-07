@@ -144,7 +144,7 @@ export class Info extends Component<any, any> {
                             <span className="text-bold">Framework & Libraries:</span>  React, Vue.Js ,JQuery, ASP.NET Core, Entity Framework, SignalR, NSwag.
                         </div>
                         <div>
-                            <span className="text-bold">Tools:</span> GIT Version Control,  Github Action, VSCode, Visual Studio, Sublime, Azure Devops, IIS, Cake Build, Jira, Basecamp.
+                            <span className="text-bold">Tools:</span> Figma, GIT Version Control,  Github Action, VSCode, Visual Studio, Sublime, Azure Devops, IIS, Cake Build, Jira, Basecamp.
                         </div>
                     </div>
                 </div>
@@ -168,6 +168,7 @@ export class Info extends Component<any, any> {
                             <li>Develop KM system web application for client company such as Apollo oil.</li>
                             <li>Develop Alfresco Custom ui for client company such as Ngern Tid Lor and Kasikorn Securities.</li>
                             <li>Develop Alfresco workflow Report, Mass approve web application and Keycloak login page for client company such as PTT OR.</li>
+                            <li>Design web application by Figma for custom project.</li>
                             <li>Taught interns.</li>
                         </ul>
 
