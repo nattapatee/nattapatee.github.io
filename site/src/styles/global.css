@@ -47,3 +47,60 @@ a {
     transform: none;
   }
 }
+
+/* ================= pixel scrollbars ================= */
+/* Firefox */
+* {
+  scrollbar-color: var(--color-ink) var(--color-bg);
+  scrollbar-width: auto;
+}
+
+/* WebKit / Blink */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+  border-left: 3px solid var(--color-ink);
+  box-shadow: inset 2px 0 0 rgba(17, 17, 17, 0.18);
+}
+
+::-webkit-scrollbar-thumb {
+  background:
+    /* two pixel grip notches */
+    linear-gradient(var(--color-bg), var(--color-bg)) 50% 40% / 8px 3px no-repeat,
+    linear-gradient(var(--color-bg), var(--color-bg)) 50% 60% / 8px 3px no-repeat,
+    var(--color-ink);
+  border: 3px solid var(--color-ink);
+  box-shadow:
+    inset 3px 3px 0 rgba(255, 255, 255, 0.35),
+    inset -3px -3px 0 rgba(0, 0, 0, 0.45);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(var(--color-bg), var(--color-bg)) 50% 40% / 8px 3px no-repeat,
+    linear-gradient(var(--color-bg), var(--color-bg)) 50% 60% / 8px 3px no-repeat,
+    #2f2a3d;
+}
+
+::-webkit-scrollbar-button:vertical:start:decrement,
+::-webkit-scrollbar-button:vertical:end:increment {
+  height: 16px;
+  background: var(--color-ink);
+  border: 3px solid var(--color-ink);
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-bg);
+}
+
+@media print {
+  ::-webkit-scrollbar {
+    width: auto;
+    height: auto;
+  }
+}

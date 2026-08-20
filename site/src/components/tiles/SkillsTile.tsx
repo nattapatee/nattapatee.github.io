@@ -1,4 +1,6 @@
 import { resume } from '../../data/resume'
+import { SkillIcon } from './SkillIcon'
+import { iconFor } from './skillIcons'
 
 export function SkillsTile() {
   return (
@@ -12,7 +14,7 @@ export function SkillsTile() {
           <div className="skill-tags">
             {group.items.map((item) => (
               <span className="skill-tag" key={item}>
-                <i className="skill-chip" aria-hidden="true" />
+                <SkillIcon kind={iconFor(item)} />
                 {item}
               </span>
             ))}

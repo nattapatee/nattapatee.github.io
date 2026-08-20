@@ -233,11 +233,12 @@
   padding: 3px 9px 3px 6px;
 }
 
-.skill-chip {
-  width: 8px;
-  height: 8px;
-  background: var(--color-ink);
+.skill-icon {
+  width: 12px;
+  height: 12px;
   flex-shrink: 0;
+  color: var(--color-ink);
+  image-rendering: pixelated;
 }
 
 /* ---- experience as a quest-style list ---- */
