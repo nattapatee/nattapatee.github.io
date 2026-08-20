@@ -23,7 +23,9 @@
   position: fixed;
   left: 0;
   bottom: 4px;
-  z-index: 50;
+  /* behind the cards: the sprites pass under each tile and reappear in the
+     gaps, while still sitting above the page background */
+  z-index: -1;
   display: flex;
   align-items: flex-end;
   gap: 10px;
