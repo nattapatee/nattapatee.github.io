@@ -1,243 +1,40 @@
-/* ================= Game Boy Color intro (pixel art) ================= */
+/* ================= Game Boy Color intro ================= */
 
 .gb-intro {
   position: fixed;
   inset: 0;
   z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.02) 0% 25%, transparent 0% 50%),
-    #17141f;
-  background-size: 48px 48px, auto;
   font-family: var(--font-mono);
   overflow: hidden;
 }
 
-/* ---- shelf scene: pixel game room ---- */
-.gb-room {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(18px, 3vh, 34px);
-  padding: 4vh 4vw;
-  overflow: hidden;
-}
-
-/* --- background props (parallax) --- */
+/* the room never changes for the whole intro — it is one fixed layer */
 .gb-room-bg {
   position: absolute;
   inset: 0;
-  transform: translate(var(--par-x, 0), var(--par-y, 0));
-  transition: transform 220ms ease-out;
-  pointer-events: none;
+  background: #241d33 url('/room-bg.webp') center / cover no-repeat;
+  image-rendering: pixelated;
 }
 
-/* wall + floor */
-.gb-room-bg::before {
-  content: '';
+.gb-stage {
   position: absolute;
-  inset: -4% -4% 26%;
-  background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 3px, transparent 3px 34px),
-    linear-gradient(#2b2438, #1d1828);
-}
-
-.gb-room-bg::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  left: -4%;
-  right: -4%;
-  bottom: 0;
-  height: 26%;
-  background:
-    repeating-linear-gradient(90deg, #3a2b1c 0 44px, #4a3722 44px 88px),
-    #3a2b1c;
-  box-shadow: inset 0 6px 0 #191320;
-}
-
-/* window with moon + stars */
-.gb-room-window,
-.gb-room-poster,
-.gb-room-plant,
-.gb-room-tv {
-  z-index: 1;
-}
-
-.gb-room-window {
-  position: absolute;
-  left: 7%;
-  top: 12%;
-  width: clamp(120px, 15vw, 190px);
-  aspect-ratio: 4 / 5;
-  background: linear-gradient(#101a3a, #1d2b52);
-  border: 6px solid #6b4a2b;
-  box-shadow: inset 0 0 0 3px #17141f, 6px 6px 0 rgba(0, 0, 0, 0.45);
-}
-
-.gb-room-window::before,
-.gb-room-window::after {
-  content: '';
-  position: absolute;
-  background: #6b4a2b;
-}
-
-.gb-room-window::before {
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  transform: translateX(-50%);
-}
-
-.gb-room-window::after {
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 5px;
-  transform: translateY(-50%);
-}
-
-.gb-room-moon {
-  position: absolute;
-  right: 16%;
-  top: 12%;
-  width: 26px;
-  height: 26px;
-  background: #ffe9a8;
-  box-shadow: 0 0 22px rgba(255, 233, 168, 0.5);
-}
-
-.gb-room-star {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #fff;
-  animation: gb-twinkle 2.4s steps(2) infinite;
-}
-
-.gb-room-star--1 { left: 22%; top: 26%; animation-delay: 0s; }
-.gb-room-star--2 { left: 62%; top: 62%; animation-delay: 0.8s; }
-.gb-room-star--3 { left: 34%; top: 74%; animation-delay: 1.6s; }
-
-@keyframes gb-twinkle {
-  50% { opacity: 0.15; }
-}
-
-/* poster */
-.gb-room-poster {
-  position: absolute;
-  right: 9%;
-  top: 14%;
-  width: clamp(84px, 10vw, 128px);
-  aspect-ratio: 3 / 4;
-  background: #ff5c8a;
-  border: 4px solid #111;
-  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.45);
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  transform: rotate(2deg);
-  color: #111;
-  font-weight: 700;
-  letter-spacing: 2px;
+  gap: clamp(14px, 2.4vh, 26px);
+  padding: 4vh 4vw;
 }
 
-.gb-room-poster b { font-size: clamp(0.6rem, 1.4vw, 0.85rem); }
-.gb-room-poster i {
-  font-style: normal;
-  font-size: clamp(0.5rem, 1.1vw, 0.7rem);
-  background: #ffde59;
-  border: 2px solid #111;
-  padding: 1px 6px;
-}
-
-/* plant */
-.gb-room-plant {
-  position: absolute;
-  left: 5%;
-  bottom: 20%;
-  width: 54px;
-  height: 78px;
-  animation: gb-sway 4s ease-in-out infinite;
-  transform-origin: bottom center;
-}
-
-.gb-room-plant::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 46px;
-  height: 46px;
-  transform: translateX(-50%);
-  background:
-    linear-gradient(#b4ff5c, #7bbd3a);
-  border: 3px solid #111;
-  clip-path: polygon(50% 0, 100% 38%, 84% 100%, 16% 100%, 0 38%);
-}
-
-.gb-room-plant::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 34px;
-  height: 32px;
-  transform: translateX(-50%);
-  background: #c98a4b;
-  border: 3px solid #111;
-  box-shadow: inset 4px 4px 0 #e0a463, inset -4px -4px 0 #a06a35;
-}
-
-@keyframes gb-sway {
-  50% { transform: rotate(3deg); }
-}
-
-/* small crt on the floor */
-.gb-room-tv {
-  position: absolute;
-  right: 7%;
-  bottom: 20%;
-  width: 76px;
-  height: 62px;
-  background: #55505e;
-  border: 4px solid #111;
-  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gb-room-tv i {
-  width: 74%;
-  height: 66%;
-  background: #9db34c;
-  border: 3px solid #111;
-  animation: gb-static 1.2s steps(3) infinite;
-}
-
-@keyframes gb-static {
-  33% { background: #b8cc68; }
-  66% { background: #7e9138; }
-}
-
-/* --- welcome copy --- */
+/* ---- welcome copy ---- */
 .gb-welcome {
-  position: relative;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 8px;
   animation: gb-welcome-in 500ms ease-out both;
+  transition: opacity 320ms ease-out, transform 320ms ease-out;
 }
 
 @keyframes gb-welcome-in {
@@ -248,6 +45,7 @@
   color: #b4ff5c;
   font-size: clamp(0.72rem, 1.7vw, 0.95rem);
   letter-spacing: 1px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
 }
 
 .gb-welcome-title {
@@ -256,18 +54,108 @@
   font-size: clamp(1.2rem, 4vw, 2.1rem);
   font-weight: 700;
   letter-spacing: 5px;
-  text-shadow: 3px 3px 0 #ff5c8a, 6px 6px 0 rgba(0, 0, 0, 0.35);
+  text-shadow: 3px 3px 0 #ff5c8a, 6px 6px 0 rgba(0, 0, 0, 0.45);
 }
 
 .gb-welcome-sub {
-  color: #cfc8de;
+  color: #d8d2e6;
   font-size: clamp(0.66rem, 1.5vw, 0.85rem);
-  letter-spacing: 0.5px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
 }
 
-/* --- shelf + cartridges --- */
+.gb-shelf-status {
+  min-height: 1.4em;
+  color: #5ce1e6;
+  font-size: clamp(0.66rem, 1.5vw, 0.85rem);
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+  transition: opacity 260ms ease-out;
+}
+
+/* text clears the moment a cartridge is chosen */
+.gb-intro:not(.gb-intro--shelf) .gb-welcome {
+  opacity: 0;
+  transform: translateY(-16px);
+}
+
+.gb-intro:not(.gb-intro--shelf) .gb-shelf-status {
+  opacity: 0;
+}
+
+/* ---- console: waits below the floor, rises to centre ---- */
+.gb-console-holder {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(210px, 40vh, 310px);
+  transform: translate(-50%, -50%) translateY(115vh);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.32, 1);
+  filter: drop-shadow(10px 12px 0 rgba(0, 0, 0, 0.5));
+  z-index: 3;
+}
+
+.gb-intro--clearing .gb-console-holder,
+.gb-intro--inserting .gb-console-holder,
+.gb-intro--booting .gb-console-holder,
+.gb-intro--zooming .gb-console-holder {
+  transform: translate(-50%, -50%);
+}
+
+.gb-intro--booting .gb-console-holder {
+  animation: gb-bump 240ms steps(3) 60ms;
+}
+
+@keyframes gb-bump {
+  30% { transform: translate(-50%, -50%) translateY(4px); }
+  60% { transform: translate(-50%, -50%) translateY(-2px); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.gb-px-svg {
+  display: block;
+  width: 100%;
+  image-rendering: pixelated;
+}
+
+/* screen overlay sits exactly on the SVG screen (x11-31, y10-27 of 40x64) */
+.gb-screen-overlay {
+  position: absolute;
+  left: 27.5%;
+  top: 15.7%;
+  width: 50%;
+  height: 26.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+.gb-bezel-brand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44.5%;
+  text-align: center;
+  color: #cfc8de;
+  font-size: clamp(0.42rem, 1.1vh, 0.55rem);
+  letter-spacing: 1px;
+}
+
+.gb-bezel-brand i {
+  font-style: normal;
+  background: linear-gradient(90deg, #ff5c8a, #ffde59, #b4ff5c, #5ce1e6, #c99cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+/* ---- shelf + cartridges ---- */
 .gb-shelf {
-  position: relative;
+  /* no stacking context here: the chosen cartridge must be able to slip
+     behind the console (z-index 3) once it is pushed into the slot */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -285,13 +173,19 @@
   height: 16px;
   background: #6b4a2b;
   border: 3px solid #111;
-  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.4);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
 }
 
 .gb-shelf-front {
   display: block;
   height: 5px;
   background: #8a6237;
+}
+
+.gb-intro:not(.gb-intro--shelf) .gb-shelf-board {
+  opacity: 0;
+  transform: translateY(18px);
 }
 
 .gb-cart {
@@ -302,6 +196,8 @@
   background: none;
   font-family: var(--font-mono);
   cursor: pointer;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.32, 1), opacity 400ms ease-out;
+  transform-origin: bottom center;
 }
 
 .gb-cart--empty {
@@ -348,10 +244,6 @@
   outline-offset: 6px;
 }
 
-.gb-cart--ready:active .gb-cart-body {
-  transform: translateY(-4px) scale(0.98);
-}
-
 .gb-cart--empty .gb-cart-body {
   background: #55505e;
   box-shadow:
@@ -364,6 +256,38 @@
 
 .gb-cart--empty:hover .gb-cart-body {
   transform: translateY(-4px) rotate(1.5deg);
+}
+
+/* chosen cartridge: glides to sit just above the console slot */
+.gb-cart--picked {
+  z-index: 5;
+  transform: translate(var(--to-x, 0), var(--to-y, 0)) scale(var(--to-scale, 0.6));
+}
+
+.gb-cart--picked .gb-cart-body {
+  animation: none;
+  transform: none;
+}
+
+/* then drops down behind the console front — it has gone into the slot */
+.gb-intro--inserting .gb-cart--picked,
+.gb-intro--booting .gb-cart--picked,
+.gb-intro--zooming .gb-cart--picked {
+  z-index: 2;
+  transform: translate(var(--to-x, 0), calc(var(--to-y, 0px) + var(--slot-drop, 40px)))
+    scale(var(--to-scale, 0.6));
+  transition: transform 400ms cubic-bezier(0.5, 0, 0.9, 0.4);
+}
+
+/* the rest of the shelf clears upward */
+.gb-cart--dismissed {
+  transform: translateY(-135vh) rotate(6deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gb-cart--dismissed .gb-cart-body {
+  animation: none;
 }
 
 /* sweeping shine on hover */
@@ -453,145 +377,11 @@
   white-space: nowrap;
 }
 
-.gb-shelf-status {
-  position: relative;
-  min-height: 1.4em;
-  color: #5ce1e6;
-  font-size: clamp(0.66rem, 1.5vw, 0.85rem);
-  letter-spacing: 1px;
-  text-align: center;
-}
-
 @keyframes gb-blink {
   50% { opacity: 0; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .gb-cart--ready .gb-cart-body,
-  .gb-room-plant,
-  .gb-room-star,
-  .gb-room-tv i,
-  .gb-welcome {
-    animation: none;
-  }
-}
-
-
-/* ---- console scene (pixel art) ---- */
-.gb-console-scene {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gb-px-console {
-  position: relative;
-  width: clamp(230px, 42vh, 330px);
-  filter: drop-shadow(12px 14px 0 rgba(0, 0, 0, 0.55));
-}
-
-.gb-intro--booting .gb-px-console {
-  animation: gb-bump 240ms steps(3);
-}
-
-@keyframes gb-bump {
-  30% { transform: translateY(4px); }
-  60% { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
-}
-
-.gb-px-svg {
-  display: block;
-  width: 100%;
-  image-rendering: pixelated;
-}
-
-/* screen overlay sits exactly on the SVG screen (x11-31, y10-27 of 40x64) */
-.gb-screen-overlay {
-  position: absolute;
-  left: 27.5%;
-  top: 15.7%;
-  width: 50%;
-  height: 26.5%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  image-rendering: pixelated;
-}
-
-.gb-bezel-brand {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 44.5%;
-  text-align: center;
-  color: #cfc8de;
-  font-size: clamp(0.42rem, 1.1vh, 0.55rem);
-  letter-spacing: 1px;
-}
-
-.gb-bezel-brand i {
-  font-style: normal;
-  background: linear-gradient(90deg, #ff5c8a, #ffde59, #b4ff5c, #5ce1e6, #c99cff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-weight: 700;
-}
-
-/* ---- cartridge insert: clipped track above the slot ---- */
-.gb-cart-track {
-  position: absolute;
-  left: 15%;
-  width: 70%;
-  bottom: 94%;
-  height: 60vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  pointer-events: none;
-}
-
-.gb-flying-cart {
-  position: relative;
-  width: clamp(64px, 10vh, 84px);
-  height: clamp(72px, 11vh, 92px);
-  background: #ffde59;
-  border: 3px solid #111;
-  box-shadow:
-    inset 4px 4px 0 #fff3a6,
-    inset -4px -4px 0 #d9b83e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  image-rendering: pixelated;
-}
-
-.gb-flying-cart .gb-cart-label {
-  font-size: 0.55rem;
-  padding: 4px 6px;
-}
-
-.gb-intro--inserting .gb-flying-cart {
-  animation: gb-insert 450ms steps(9) forwards;
-}
-
-@keyframes gb-insert {
-  0% { transform: translateY(-42vh) rotate(-4deg); }
-  55% { transform: translateY(-4vh) rotate(0deg); }
-  70% { transform: translateY(-1vh); }
-  100% { transform: translateY(101%); }
-}
-
-.gb-intro--booting .gb-cart-track,
-.gb-intro--zooming .gb-cart-track {
-  display: none;
-}
-
-/* ---- boot logo (GB-style drop-in + color cycle) ---- */
+/* ---- boot logo ---- */
 .gb-boot-logo {
   font-family: var(--font-display);
   font-weight: 700;
@@ -600,8 +390,8 @@
   color: #1b3a1b;
   text-shadow: 2px 2px 0 rgba(27, 58, 27, 0.25);
   animation:
-    gb-logo-drop 750ms steps(10) forwards,
-    gb-logo-color 950ms steps(6) 750ms forwards;
+    gb-logo-drop 700ms steps(10) forwards,
+    gb-logo-color 900ms steps(6) 700ms forwards;
 }
 
 @keyframes gb-logo-drop {
@@ -625,7 +415,7 @@
   font-size: 0.5rem;
   color: #33511f;
   opacity: 0;
-  animation: gb-tm-in 250ms steps(2) 1050ms forwards;
+  animation: gb-tm-in 250ms steps(2) 1000ms forwards;
 }
 
 @keyframes gb-tm-in {
@@ -633,41 +423,36 @@
 }
 
 /* ---- zoom into the screen ---- */
-.gb-intro--zooming {
-  animation: gb-zoom 850ms cubic-bezier(0.62, 0.01, 0.86, 0.4) forwards;
-  transform-origin: 50.5% 32.5%;
+.gb-intro--zooming .gb-stage {
+  animation: gb-zoom 800ms cubic-bezier(0.62, 0.01, 0.86, 0.4) forwards;
+  transform-origin: var(--zoom-x, 50%) var(--zoom-y, 41.5%);
   pointer-events: none;
 }
 
-@keyframes gb-zoom {
-  0% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-  70% {
-    transform: scale(9);
-    filter: brightness(1.05);
-  }
-  100% {
-    transform: scale(24);
-    filter: brightness(1.25);
-  }
+.gb-intro--zooming .gb-room-bg {
+  animation: gb-room-out 800ms ease-in forwards;
 }
 
-/* logo clears the screen before the zoom lands, so the last frame is clean green */
+@keyframes gb-room-out {
+  to { opacity: 0; }
+}
+
+@keyframes gb-zoom {
+  0% { transform: scale(1); filter: brightness(1); }
+  70% { transform: scale(9); filter: brightness(1.05); }
+  100% { transform: scale(26); filter: brightness(1.3); }
+}
+
 .gb-intro--zooming .gb-boot-logo,
 .gb-intro--zooming .gb-boot-tm {
   animation: gb-logo-out 260ms steps(4) forwards;
 }
 
 @keyframes gb-logo-out {
-  to {
-    opacity: 0;
-    transform: translateY(-14%);
-  }
+  to { opacity: 0; transform: translateY(-14%); }
 }
 
-/* ---- reveal: green screen washes out into the page ---- */
+/* ---- reveal: green screen washes out over the skeleton ---- */
 .gb-reveal {
   position: fixed;
   inset: 0;
@@ -678,18 +463,9 @@
 }
 
 @keyframes gb-dissolve {
-  0% {
-    opacity: 1;
-    filter: brightness(1.25);
-  }
-  45% {
-    opacity: 0.75;
-    filter: brightness(1.5);
-  }
-  100% {
-    opacity: 0;
-    filter: brightness(2);
-  }
+  0% { opacity: 1; filter: brightness(1.3); }
+  45% { opacity: 0.7; filter: brightness(1.5); }
+  100% { opacity: 0; filter: brightness(2); }
 }
 
 /* the page waits behind the intro, then plays its entrance on reveal */
@@ -700,6 +476,53 @@
 
 .app-waiting .bento .tile {
   animation: none !important;
+}
+
+/* ---- skeleton hand-off ---- */
+.gb-skeleton {
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  pointer-events: none;
+  background: var(--color-bg);
+  animation: gb-skeleton-out 620ms ease-out 220ms forwards;
+}
+
+@keyframes gb-skeleton-out {
+  to { opacity: 0; }
+}
+
+.gb-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 2vw, 24px);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px);
+}
+
+.gb-skeleton-tile {
+  border: var(--border-brutal);
+  box-shadow: var(--shadow-brutal);
+  background: rgba(255, 255, 255, 0.55);
+  min-height: 90px;
+  animation: gb-skeleton-pulse 900ms ease-in-out infinite;
+}
+
+.gb-skeleton-tile:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.gb-skeleton-tile:nth-child(2) { grid-column: span 2; }
+.gb-skeleton-tile:nth-child(3) { grid-column: span 2; }
+.gb-skeleton-tile:nth-child(4) { grid-column: span 4; min-height: 150px; }
+.gb-skeleton-tile:nth-child(5) { grid-column: span 2; }
+.gb-skeleton-tile:nth-child(6) { grid-column: span 2; }
+
+@keyframes gb-skeleton-pulse {
+  50% { background: rgba(255, 255, 255, 0.82); }
+}
+
+@media (max-width: 767px) {
+  .gb-skeleton-grid { grid-template-columns: 1fr; }
+  .gb-skeleton-tile { grid-column: span 1 !important; grid-row: auto !important; }
 }
 
 /* ---- floating Game Boy menu ---- */
@@ -750,10 +573,7 @@
 }
 
 @keyframes gb-menu-in {
-  from {
-    transform: translateY(8px) scaleY(0.8);
-    opacity: 0;
-  }
+  from { transform: translateY(8px) scaleY(0.8); opacity: 0; }
 }
 
 .gb-menu-title {
@@ -811,19 +631,13 @@
   white-space: nowrap;
 }
 
-@media print {
-  .gb-menu-wrap,
-  .gb-reveal {
-    display: none !important;
-  }
-}
-
 /* ---- skip ---- */
 .gb-skip {
   position: absolute;
   right: 18px;
   bottom: 14px;
-  background: none;
+  z-index: 6;
+  background: rgba(23, 20, 31, 0.7);
   border: 2px solid #55505e;
   color: #9a94a8;
   font-family: var(--font-mono);
@@ -838,8 +652,18 @@
   color: #ffde59;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .gb-cart--ready .gb-cart-body,
+  .gb-welcome {
+    animation: none;
+  }
+}
+
 @media print {
-  .gb-intro {
+  .gb-intro,
+  .gb-reveal,
+  .gb-skeleton,
+  .gb-menu-wrap {
     display: none !important;
   }
 }
