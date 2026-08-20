@@ -4,7 +4,9 @@ export function PrintResume() {
   return (
     <div className="print-only print-resume">
       <header>
-        <p className="print-resume-name">{resume.name} ({resume.nickname})</p>
+        <p className="print-resume-name" role="heading" aria-level={1}>
+          {resume.name} ({resume.nickname})
+        </p>
         <p>{resume.role}</p>
         <p>
           {resume.contact.email} · {resume.contact.phone} · Line: {resume.contact.line}
