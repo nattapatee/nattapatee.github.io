@@ -1,0 +1,51 @@
+.print-only {
+  display: none;
+}
+
+@media print {
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 11pt;
+  }
+
+  .print-resume {
+    max-width: 100%;
+  }
+
+  .print-resume header {
+    border-bottom: 2px solid #000;
+    padding-bottom: 8pt;
+    margin-bottom: 12pt;
+  }
+
+  .print-resume h1 {
+    font-size: 20pt;
+    margin-bottom: 2pt;
+  }
+
+  .print-resume h2 {
+    font-size: 13pt;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+    border-bottom: 1px solid #000;
+    margin: 12pt 0 6pt;
+  }
+
+  .print-resume ul {
+    margin: 4pt 0 8pt 16pt;
+  }
+
+  .print-resume section {
+    break-inside: avoid;
+  }
+}
