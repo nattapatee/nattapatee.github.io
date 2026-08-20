@@ -1,0 +1,20 @@
+:root {
+  --color-bg: #ffde59;
+  --color-ink: #111;
+  --color-pink: #ff5c8a;
+  --color-cyan: #5ce1e6;
+  --color-lime: #b4ff5c;
+  --color-purple: #c99cff;
+  --color-paper: #fff;
+
+  --border-brutal: 3px solid var(--color-ink);
+  --shadow-brutal: 6px 6px 0 var(--color-ink);
+  --shadow-brutal-hover: 10px 10px 0 var(--color-ink);
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --space-tile: clamp(16px, 2vw, 24px);
+  --duration-pop: 350ms;
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
