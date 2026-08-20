@@ -35,10 +35,12 @@ export const resume: Resume = {
   name: 'Nattapat Ekapobyothin',
   nickname: 'Mark',
   role: 'Software Developer',
-  // TODO(mark): confirm summary — drafted from old resume objective
   summary:
-    'Software developer focused on frontend and document-management systems. ' +
-    'Building web applications with React, TypeScript and .NET for enterprise clients.',
+    'Software developer, 7+ years in. I build the interfaces people actually use — document ' +
+    'management, records and reporting systems for enterprise clients — mostly in React, Next.js ' +
+    'and TypeScript, with .NET when the work calls for it. Lately I have been building side ' +
+    'projects end to end, advising clients as an IT consultant, and putting AI tooling to work ' +
+    'in my daily workflow.',
   contact: {
     email: 'nattapat.ek@gmail.com',
     phone: '087-549-5690',
@@ -82,12 +84,14 @@ export const resume: Resume = {
   experience: [
     {
       company: 'Freelance',
-      role: 'Full-stack Developer (side projects)',
+      role: 'Full-stack Developer & IT Consultant',
       // TODO(mark): confirm freelance start period
       period: '2026 — Present',
       bullets: [
         'Built a custom inventory management system (IMS) for a private client — .NET clean architecture (API / Application / Domain / Infrastructure) with unit and integration tests, database migrations and Docker deployment.',
         'Built a transaction-management bot with web dashboard and API for the same client.',
+        // TODO(mark): sharpen this to what you actually advise on (systems? tooling? team process?)
+        'Advise clients as an IT consultant on system design, technology choices and development workflow.',
       ],
     },
     {
