@@ -7,7 +7,51 @@
   padding: clamp(20px, 4vw, 48px);
 }
 
-.tile--hero { grid-column: span 2; grid-row: span 2; background: var(--color-paper); }
+.tile--hero {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: var(--color-paper);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.hero-avatar {
+  flex-shrink: 0;
+  width: clamp(72px, 10vw, 112px);
+  height: auto;
+  border: var(--border-brutal);
+  box-shadow: 4px 4px 0 var(--color-ink);
+  image-rendering: pixelated;
+  background: var(--color-bg);
+}
+
+.hero-sprite {
+  position: absolute;
+  right: 14px;
+  bottom: 10px;
+  width: 56px;
+  height: auto;
+  image-rendering: pixelated;
+  transform: rotate(-3deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-sprite:hover {
+    animation: sprite-hop 400ms var(--ease-pop);
+  }
+
+  @keyframes sprite-hop {
+    30% { transform: rotate(3deg) translateY(-8px); }
+    100% { transform: rotate(-3deg); }
+  }
+}
 .tile--contact { grid-column: span 2; background: var(--color-pink); }
 .tile--skills { grid-column: span 2; background: var(--color-cyan); }
 .tile--experience { grid-column: span 4; background: var(--color-paper); }
