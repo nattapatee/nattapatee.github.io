@@ -113,3 +113,21 @@
   .tile--hero, .tile--contact, .tile--skills,
   .tile--experience, .tile--education, .tile--links { grid-column: span 1; grid-row: auto; }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bento .tile {
+    animation: tile-pop var(--duration-pop) var(--ease-pop) both;
+    animation-delay: calc(var(--tile-index, 0) * 60ms);
+  }
+
+  @keyframes tile-pop {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

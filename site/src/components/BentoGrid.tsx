@@ -7,14 +7,15 @@ import { EducationTile } from './tiles/EducationTile'
 import { LinksTile } from './tiles/LinksTile'
 
 export function BentoGrid() {
+  const tiles = [HeroTile, ContactTile, SkillsTile, ExperienceTile, EducationTile, LinksTile]
+
   return (
     <main className="bento">
-      <HeroTile />
-      <ContactTile />
-      <SkillsTile />
-      <ExperienceTile />
-      <EducationTile />
-      <LinksTile />
+      {tiles.map((Tile, index) => (
+        <div key={Tile.name} style={{ display: 'contents', ['--tile-index' as string]: index }}>
+          <Tile />
+        </div>
+      ))}
     </main>
   )
 }
