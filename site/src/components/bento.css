@@ -1,0 +1,108 @@
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 2vw, 24px);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px);
+}
+
+.tile--hero { grid-column: span 2; grid-row: span 2; background: var(--color-paper); }
+.tile--contact { grid-column: span 2; background: var(--color-pink); }
+.tile--skills { grid-column: span 2; background: var(--color-cyan); }
+.tile--experience { grid-column: span 4; background: var(--color-paper); }
+.tile--education { grid-column: span 2; background: var(--color-lime); }
+.tile--links { grid-column: span 2; background: var(--color-purple); }
+
+.hero-name {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+.hero-role {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  margin-top: 12px;
+  min-height: 1.5em;
+}
+
+.hero-role::after {
+  content: '';
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  background: var(--color-ink);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-role::after { animation: none; }
+}
+
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.skill-tag {
+  background: var(--color-paper);
+  border: 2px solid var(--color-ink);
+  box-shadow: 3px 3px 0 var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 10px;
+}
+
+.xp-item + .xp-item { margin-top: 20px; }
+.xp-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+.xp-company { font-weight: 700; font-size: 1.05rem; }
+.xp-period { font-family: var(--font-mono); font-size: 0.85rem; }
+.xp-bullets { margin: 10px 0 0 20px; line-height: 1.6; font-size: 0.95rem; }
+
+.contact-row { font-size: 0.95rem; line-height: 1.9; overflow-wrap: anywhere; }
+.contact-row b { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+.links-buttons { display: flex; flex-direction: column; gap: 12px; }
+
+.brutal-button {
+  display: inline-block;
+  background: var(--color-paper);
+  border: var(--border-brutal);
+  box-shadow: 4px 4px 0 var(--color-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 10px 16px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 150ms ease, transform 150ms ease;
+}
+
+.brutal-button:hover {
+  box-shadow: 7px 7px 0 var(--color-ink);
+  transform: translate(-2px, -2px);
+}
+
+.brutal-button:active {
+  box-shadow: 1px 1px 0 var(--color-ink);
+  transform: translate(3px, 3px);
+}
+
+.brutal-button:focus-visible {
+  outline: 3px dashed var(--color-ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 767px) {
+  .bento { grid-template-columns: 1fr; }
+  .tile--hero, .tile--contact, .tile--skills,
+  .tile--experience, .tile--education, .tile--links { grid-column: span 1; grid-row: auto; }
+}

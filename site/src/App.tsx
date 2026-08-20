@@ -1,3 +1,5 @@
+import { BentoGrid } from './components/BentoGrid'
+
 export default function App() {
-  return <h1>Nattapat Ekapobyothin</h1>
+  return <BentoGrid />
 }
