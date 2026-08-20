@@ -49,6 +49,7 @@ export function PrintResume() {
       <section>
         <h2>Education</h2>
         <p>{resume.education.degree}</p>
+        <p>{resume.education.faculty}</p>
         <p>
           {resume.education.university}, {resume.education.period} · GPA {resume.education.gpa}
         </p>

@@ -33,7 +33,7 @@ test('print media shows print resume, hides bento', async ({ page }) => {
 test('reduced motion shows full role text immediately', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/')
-  await expect(page.locator('.hero-role')).toHaveText('Software Developer')
+  await expect(page.locator('.hero-role')).toHaveText('Software Developer', { timeout: 250 })
 })
 
 test('links are keyboard reachable', async ({ page }) => {

@@ -34,7 +34,8 @@ typings/
 *.tgz
 
 # Yarn Integrity file
-.yarn-integrity.superpowers/
+.yarn-integrity
+.superpowers/
 
 # Playwright test output
 site/test-results/
