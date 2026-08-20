@@ -28,8 +28,9 @@
     margin-bottom: 12pt;
   }
 
-  .print-resume h1 {
+  .print-resume-name {
     font-size: 20pt;
+    font-weight: bold;
     margin-bottom: 2pt;
   }
 

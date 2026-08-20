@@ -35,3 +35,6 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity.superpowers/
+
+# Playwright test output
+site/test-results/
