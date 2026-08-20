@@ -46,6 +46,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-role::after { animation: none; }
+
+  .brutal-button,
+  .brutal-button:hover,
+  .brutal-button:active {
+    transition: none;
+    transform: none;
+  }
 }
 
 .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
