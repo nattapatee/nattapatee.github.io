@@ -98,7 +98,7 @@ export const resume: Resume = {
       bullets: [
         'Built a document management custom UI for Thai Life Insurance — React, Ant Design, Alfresco, Keycloak, PDF.js/pdf-lib with docx and pptx preview, deployed with Docker.',
         'Built a full-stack report platform for TNS — .NET backend with scheduled jobs, React frontend and custom Keycloak login themes.',
-        'Developed a policy management system for BTG — .NET, SQL Server and Azure Pipelines CI.',
+        'Built the frontend for BTG\'s policy management system — ASP.NET Razor Pages UI with an embedded PDF viewer for policy documents.',
         'Built the frontend for the KKPS batch upload service — Next.js operations UI for monitoring and managing batch uploads.',
         'Built frontend and UI design for E-Document (Sarabun) system for Kasetsart University.',
         'Built frontend and UI design for the document and records management system of the Civil Aviation Authority of Thailand.',
