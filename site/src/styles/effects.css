@@ -1,0 +1,198 @@
+/* ---- pixel cursor + animated checkerboard ground (motion-gated) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath fill='%23111' d='M1 0h2v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h-4v1h-1v1h-1v1h-1V0z'/%3E%3Cpath fill='%23fff' d='M2 2h1v1h1v1h1v1h1v1h1v1h1v1h-3v1h-1v1h-1V2z'/%3E%3C/svg%3E")
+        2 2,
+      auto;
+    background-image:
+      repeating-conic-gradient(from 0deg, rgba(17, 17, 17, 0.05) 0% 25%, transparent 0% 50%);
+    background-size: 56px 56px;
+    animation: checker-scroll 18s linear infinite;
+  }
+
+  @keyframes checker-scroll {
+    to {
+      background-position: 56px 56px;
+    }
+  }
+}
+
+/* ---- boot screen ---- */
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #111;
+  color: #ffde59;
+  font-family: var(--font-mono);
+  text-align: center;
+  image-rendering: pixelated;
+}
+
+.boot-screen--fading {
+  animation: boot-out 400ms steps(5) forwards;
+}
+
+@keyframes boot-out {
+  to {
+    opacity: 0;
+    transform: scale(1.06);
+    visibility: hidden;
+  }
+}
+
+.boot-sprite {
+  image-rendering: pixelated;
+  animation: boot-bob 600ms steps(2) infinite;
+}
+
+@keyframes boot-bob {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.boot-title {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #fff;
+  text-shadow: 4px 4px 0 #ff5c8a;
+}
+
+.boot-version {
+  font-size: 0.8rem;
+  color: #5ce1e6;
+}
+
+.boot-press {
+  margin-top: 18px;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  animation: boot-blink 900ms steps(1) infinite;
+}
+
+@keyframes boot-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---- walking parade ---- */
+.parade {
+  position: fixed;
+  left: 0;
+  bottom: 4px;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  width: 200px;
+  will-change: transform;
+  cursor: pointer;
+  user-select: none;
+}
+
+.parade-walker {
+  image-rendering: pixelated;
+  transform: scaleX(var(--walk-dir, 1));
+  animation: walker-bob 360ms steps(2) infinite;
+}
+
+@keyframes walker-bob {
+  50% {
+    transform: scaleX(var(--walk-dir, 1)) translateY(-2px);
+  }
+}
+
+.parade--hop .parade-walker {
+  animation: walker-hop 500ms var(--ease-pop);
+}
+
+@keyframes walker-hop {
+  40% {
+    transform: scaleX(var(--walk-dir, 1)) translateY(-18px);
+  }
+  100% {
+    transform: scaleX(var(--walk-dir, 1)) translateY(0);
+  }
+}
+
+/* ---- pixel click burst ---- */
+.pixel-piece {
+  position: fixed;
+  z-index: 99;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+/* ---- glitch name on hover ---- */
+.hero-name {
+  position: relative;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-name:hover::before,
+  .hero-name:hover::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-name:hover::before {
+    color: #ff5c8a;
+    clip-path: inset(12% 0 58% 0);
+    animation: glitch-a 320ms steps(2) infinite;
+  }
+
+  .hero-name:hover::after {
+    color: #5ce1e6;
+    clip-path: inset(60% 0 8% 0);
+    animation: glitch-b 280ms steps(2) infinite reverse;
+  }
+
+  @keyframes glitch-a {
+    0% { transform: translate(-4px, -2px); }
+    50% { transform: translate(3px, 1px); clip-path: inset(35% 0 30% 0); }
+    100% { transform: translate(-2px, 2px); }
+  }
+
+  @keyframes glitch-b {
+    0% { transform: translate(4px, 1px); }
+    50% { transform: translate(-3px, -1px); clip-path: inset(5% 0 75% 0); }
+    100% { transform: translate(2px, -2px); }
+  }
+}
+
+/* ---- 3D tilt (inline transform set from JS; give tiles depth) ---- */
+.bento {
+  perspective: 900px;
+}
+
+.tile {
+  transform-style: preserve-3d;
+}
+
+/* effects never reach paper */
+@media print {
+  .boot-screen,
+  .parade,
+  .pixel-piece {
+    display: none !important;
+  }
+
+  body {
+    animation: none;
+    background-image: none;
+    cursor: auto;
+  }
+}

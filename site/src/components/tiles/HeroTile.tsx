@@ -8,7 +8,7 @@ export function HeroTile() {
     <section className="tile tile--hero" aria-labelledby="hero-heading">
       <div className="hero-head">
         <div>
-          <h1 id="hero-heading" className="hero-name">
+          <h1 id="hero-heading" className="hero-name" data-text={resume.name}>
             {resume.name}
           </h1>
           <p className="hero-role">{typedRole}</p>

@@ -3,11 +3,11 @@ import { defineConfig } from '@playwright/test'
 export default defineConfig({
   testDir: './tests',
   webServer: {
-    command: 'npm run dev -- --port 5199',
-    port: 5199,
-    reuseExistingServer: true,
+    command: 'npm run dev -- --port 5871 --strictPort',
+    port: 5871,
+    reuseExistingServer: false,
   },
   use: {
-    baseURL: 'http://localhost:5199',
+    baseURL: 'http://localhost:5871',
   },
 })
