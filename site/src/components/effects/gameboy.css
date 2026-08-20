@@ -1,4 +1,4 @@
-/* ================= Game Boy Color intro ================= */
+/* ================= Game Boy Color intro (pixel art) ================= */
 
 .gb-intro {
   position: fixed;
@@ -7,7 +7,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #17141f;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.02) 0% 25%, transparent 0% 50%),
+    #17141f;
+  background-size: 48px 48px, auto;
   font-family: var(--font-mono);
   overflow: hidden;
 }
@@ -34,7 +37,7 @@
   gap: clamp(14px, 4vw, 32px);
   padding: 0 24px 18px;
   border-bottom: 14px solid #6b4a2b;
-  box-shadow: 0 14px 0 #4c3116;
+  box-shadow: 0 14px 0 #4c3116, 0 -60px 60px -50px rgba(255, 222, 89, 0.25) inset;
 }
 
 .gb-cart {
@@ -54,7 +57,10 @@
 
 .gb-cart--ready {
   background: #ffde59;
-  box-shadow: 6px 6px 0 #000;
+  box-shadow:
+    6px 6px 0 #000,
+    inset 5px 5px 0 #fff3a6,
+    inset -5px -5px 0 #d9b83e;
   cursor: pointer;
 }
 
@@ -67,7 +73,10 @@
 
 .gb-cart--empty {
   background: #55505e;
-  box-shadow: 6px 6px 0 #000;
+  box-shadow:
+    6px 6px 0 #000,
+    inset 5px 5px 0 #6d6879,
+    inset -5px -5px 0 #3d3947;
   cursor: not-allowed;
   color: #9a94a8;
 }
@@ -93,6 +102,7 @@
   font-size: clamp(0.65rem, 1.6vw, 0.85rem);
   padding: 6px 8px;
   letter-spacing: 1px;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
 }
 
 .gb-cart--empty .gb-cart-label {
@@ -124,7 +134,7 @@
   50% { opacity: 0; }
 }
 
-/* ---- console scene ---- */
+/* ---- console scene (pixel art) ---- */
 .gb-console-scene {
   position: relative;
   display: flex;
@@ -132,47 +142,54 @@
   justify-content: center;
 }
 
-.gb-console {
+.gb-px-console {
   position: relative;
-  width: clamp(240px, 40vh, 340px);
-  aspect-ratio: 10 / 16;
-  background: #ffde59;
-  border: 4px solid #111;
-  border-radius: 12px 12px 48px 12px;
-  box-shadow: 10px 10px 0 #000;
-  padding: 7% 8%;
+  width: clamp(230px, 42vh, 330px);
+  filter: drop-shadow(12px 14px 0 rgba(0, 0, 0, 0.55));
 }
 
-.gb-screen-bezel {
-  position: relative;
-  background: #3a3547;
-  border: 3px solid #111;
-  border-radius: 8px 8px 26px 8px;
-  padding: 9% 12% 13%;
+.gb-intro--booting .gb-px-console {
+  animation: gb-bump 240ms steps(3);
 }
 
-.gb-screen {
-  position: relative;
-  aspect-ratio: 10 / 9;
-  background: #9db34c;
-  border: 3px solid #111;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@keyframes gb-bump {
+  30% { transform: translateY(4px); }
+  60% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+.gb-px-svg {
+  display: block;
+  width: 100%;
   image-rendering: pixelated;
 }
 
-.gb-bezel-text {
-  display: block;
-  margin-top: 8px;
+/* screen overlay sits exactly on the SVG screen (x11-31, y10-27 of 40x64) */
+.gb-screen-overlay {
+  position: absolute;
+  left: 27.5%;
+  top: 15.7%;
+  width: 50%;
+  height: 26.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+.gb-bezel-brand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44.5%;
   text-align: center;
   color: #cfc8de;
-  font-size: 0.5rem;
+  font-size: clamp(0.42rem, 1.1vh, 0.55rem);
   letter-spacing: 1px;
 }
 
-.gb-bezel-text i {
+.gb-bezel-brand i {
   font-style: normal;
   background: linear-gradient(90deg, #ff5c8a, #ffde59, #b4ff5c, #5ce1e6, #c99cff);
   -webkit-background-clip: text;
@@ -181,120 +198,53 @@
   font-weight: 700;
 }
 
-.gb-power-led {
+/* ---- cartridge insert: clipped track above the slot ---- */
+.gb-cart-track {
   position: absolute;
-  top: 12px;
-  left: -1px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #3f3;
-  box-shadow: 0 0 8px #3f3;
-}
-
-.gb-intro--inserting .gb-power-led {
-  background: #644;
-  box-shadow: none;
-}
-
-.gb-controls {
+  left: 15%;
+  width: 70%;
+  bottom: 94%;
+  height: 60vh;
+  overflow: hidden;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10%;
-  padding: 0 2%;
-}
-
-.gb-dpad {
-  width: 22%;
-  aspect-ratio: 1;
-  background:
-    linear-gradient(#111, #111) 50% 0 / 34% 100% no-repeat,
-    linear-gradient(#111, #111) 0 50% / 100% 34% no-repeat;
-}
-
-.gb-buttons {
-  display: flex;
-  gap: 10px;
-  transform: rotate(-20deg);
-}
-
-.gb-buttons i {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #c14a68;
-  border: 3px solid #111;
-  color: #111;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 0.7rem;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
 }
 
-.gb-startselect {
-  display: block;
-  margin: 8% auto 0;
-  width: 40%;
-  height: 8px;
-  background:
-    linear-gradient(#111, #111) 15% 50% / 30% 100% no-repeat,
-    linear-gradient(#111, #111) 85% 50% / 30% 100% no-repeat;
-  transform: rotate(-20deg);
-}
-
-.gb-speaker {
-  position: absolute;
-  right: 9%;
-  bottom: 6%;
-  width: 18%;
-  height: 12%;
-  background: repeating-linear-gradient(115deg, #111 0 3px, transparent 3px 9px);
-  border-radius: 4px;
-}
-
-/* ---- flying cartridge (insert animation) ---- */
 .gb-flying-cart {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  width: 96px;
-  height: 108px;
+  position: relative;
+  width: clamp(64px, 10vh, 84px);
+  height: clamp(72px, 11vh, 92px);
   background: #ffde59;
   border: 3px solid #111;
-  box-shadow: 5px 5px 0 #000;
+  box-shadow:
+    inset 4px 4px 0 #fff3a6,
+    inset -4px -4px 0 #d9b83e;
   display: flex;
   align-items: center;
   justify-content: center;
+  image-rendering: pixelated;
 }
 
 .gb-flying-cart .gb-cart-label {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
+  padding: 4px 6px;
 }
 
 .gb-intro--inserting .gb-flying-cart {
-  animation: gb-insert 900ms steps(8) forwards;
+  animation: gb-insert 450ms steps(9) forwards;
 }
 
 @keyframes gb-insert {
-  0% {
-    transform: translateY(-46vh) scale(1.1) rotate(-6deg);
-    opacity: 1;
-  }
-  70% {
-    transform: translateY(-30vh) scale(0.7) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-24vh) scale(0.45);
-    opacity: 0;
-  }
+  0% { transform: translateY(-42vh) rotate(-4deg); }
+  55% { transform: translateY(-4vh) rotate(0deg); }
+  70% { transform: translateY(-1vh); }
+  100% { transform: translateY(101%); }
 }
 
-.gb-intro--booting .gb-flying-cart,
-.gb-intro--zooming .gb-flying-cart {
+.gb-intro--booting .gb-cart-track,
+.gb-intro--zooming .gb-cart-track {
   display: none;
 }
 
@@ -302,16 +252,17 @@
 .gb-boot-logo {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.4rem, 5vh, 2.2rem);
+  font-size: clamp(1.3rem, 4.6vh, 2rem);
   letter-spacing: 3px;
   color: #1b3a1b;
+  text-shadow: 2px 2px 0 rgba(27, 58, 27, 0.25);
   animation:
-    gb-logo-drop 900ms steps(12) forwards,
-    gb-logo-color 1200ms steps(6) 900ms forwards;
+    gb-logo-drop 750ms steps(10) forwards,
+    gb-logo-color 950ms steps(6) 750ms forwards;
 }
 
 @keyframes gb-logo-drop {
-  from { transform: translateY(-160%); }
+  from { transform: translateY(-170%); }
   to { transform: translateY(0); }
 }
 
@@ -324,11 +275,14 @@
 
 .gb-boot-tm {
   position: absolute;
-  bottom: 8%;
-  font-size: 0.55rem;
+  bottom: 6%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.5rem;
   color: #33511f;
   opacity: 0;
-  animation: gb-tm-in 300ms steps(2) 1200ms forwards;
+  animation: gb-tm-in 250ms steps(2) 1050ms forwards;
 }
 
 @keyframes gb-tm-in {
@@ -337,8 +291,8 @@
 
 /* ---- zoom into the screen ---- */
 .gb-intro--zooming {
-  animation: gb-zoom 900ms steps(14) forwards;
-  transform-origin: 50% 34%;
+  animation: gb-zoom 750ms steps(12) forwards;
+  transform-origin: 51% 38%;
   pointer-events: none;
 }
 
@@ -348,11 +302,11 @@
     opacity: 1;
   }
   75% {
-    transform: scale(7);
+    transform: scale(8);
     opacity: 1;
   }
   100% {
-    transform: scale(11);
+    transform: scale(12);
     opacity: 0;
   }
 }

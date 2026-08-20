@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import { GbConsoleArt } from './GbConsoleArt'
 import './gameboy.css'
 
 type Phase = 'shelf' | 'inserting' | 'booting' | 'zooming' | 'done'
 
-const INSERT_MS = 900
-const BOOT_MS = 2100
-const ZOOM_MS = 900
+const INSERT_MS = 450
+const BOOT_MS = 1800
+const ZOOM_MS = 750
 
 const CARTRIDGES = [
   { id: 'resume', label: 'RESUME', ready: true },
@@ -14,22 +15,24 @@ const CARTRIDGES = [
   { id: 'mystery', label: '???', ready: false },
 ]
 
-function playBootDing() {
+function playTone(freq: number, at: number, dur: number, gainValue: number, ctx: AudioContext) {
+  const osc = ctx.createOscillator()
+  const gain = ctx.createGain()
+  osc.type = 'square'
+  osc.frequency.value = freq
+  gain.gain.setValueAtTime(gainValue, ctx.currentTime + at)
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + at + dur)
+  osc.connect(gain).connect(ctx.destination)
+  osc.start(ctx.currentTime + at)
+  osc.stop(ctx.currentTime + at + dur)
+}
+
+function playClunkThenDing() {
   try {
     const ctx = new AudioContext()
-    const play = (freq: number, at: number, dur: number) => {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'square'
-      osc.frequency.value = freq
-      gain.gain.setValueAtTime(0.06, ctx.currentTime + at)
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + at + dur)
-      osc.connect(gain).connect(ctx.destination)
-      osc.start(ctx.currentTime + at)
-      osc.stop(ctx.currentTime + at + dur)
-    }
-    play(1046, 0, 0.12)
-    play(2093, 0.1, 0.35)
+    playTone(140, 0, 0.09, 0.09, ctx) // cartridge clunk
+    playTone(1046, 0.35, 0.1, 0.05, ctx)
+    playTone(2093, 0.44, 0.32, 0.05, ctx)
   } catch {
     // audio unavailable — intro stays silent
   }
@@ -38,13 +41,13 @@ function playBootDing() {
 export function GameBoyIntro() {
   const reduced = useReducedMotion()
   const [phase, setPhase] = useState<Phase>(() => (reduced ? 'done' : 'shelf'))
-  const dingPlayed = useRef(false)
+  const soundPlayed = useRef(false)
 
   useEffect(() => {
     if (phase === 'shelf' || phase === 'done') return
-    if (phase === 'booting' && !dingPlayed.current) {
-      dingPlayed.current = true
-      playBootDing()
+    if (phase === 'booting' && !soundPlayed.current) {
+      soundPlayed.current = true
+      playClunkThenDing()
     }
     const nextByPhase: Record<Exclude<Phase, 'shelf' | 'done'>, [Phase, number]> = {
       inserting: ['booting', INSERT_MS],
@@ -94,32 +97,25 @@ export function GameBoyIntro() {
 
       {phase !== 'shelf' && (
         <div className="gb-console-scene">
-          <div className="gb-flying-cart" aria-hidden="true">
-            <span className="gb-cart-notch" />
-            <span className="gb-cart-label">RESUME</span>
-          </div>
-          <div className="gb-console" aria-hidden="true">
-            <div className="gb-screen-bezel">
-              <div className="gb-screen">
-                {phase !== 'inserting' && (
-                  <span className="gb-boot-logo" data-text="RESUME">
-                    RESUME
-                  </span>
-                )}
-                {phase === 'booting' && <span className="gb-boot-tm">Nattapat game 2026</span>}
+          <div className="gb-px-console" aria-hidden="true">
+            <div className="gb-cart-track">
+              <div className="gb-flying-cart">
+                <span className="gb-cart-notch" />
+                <span className="gb-cart-label">RESUME</span>
               </div>
-              <span className="gb-bezel-text">RESUME BOY <i>COLOR</i></span>
-              <span className="gb-power-led" />
             </div>
-            <div className="gb-controls">
-              <span className="gb-dpad" />
-              <span className="gb-buttons">
-                <i className="gb-btn-b">B</i>
-                <i className="gb-btn-a">A</i>
-              </span>
+            <GbConsoleArt ledOn={phase !== 'inserting'} />
+            <div className="gb-screen-overlay">
+              {phase !== 'inserting' && (
+                <>
+                  <span className="gb-boot-logo">RESUME</span>
+                  <span className="gb-boot-tm">Nattapat game 2026</span>
+                </>
+              )}
             </div>
-            <span className="gb-startselect" />
-            <span className="gb-speaker" />
+            <span className="gb-bezel-brand">
+              RESUME BOY <i>COLOR</i>
+            </span>
           </div>
         </div>
       )}
