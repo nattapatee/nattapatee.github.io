@@ -3,7 +3,7 @@ import { useReducedMotion } from './useReducedMotion'
 
 export function useTypewriter(text: string, msPerChar = 60): string {
   const reduced = useReducedMotion()
-  const [length, setLength] = useState(0)
+  const [length, setLength] = useState(() => (reduced ? text.length : 0))
 
   useEffect(() => {
     if (reduced) {
