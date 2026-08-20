@@ -1,3 +1,9 @@
+/* grid items may shrink below their content's natural width */
+.bento > * ,
+.bento .tile {
+  min-width: 0;
+}
+
 .bento {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -12,7 +18,8 @@
   grid-row: span 2;
   background: var(--color-paper);
   position: relative;
-  overflow: hidden;
+  /* visible so the panel tab can straddle the top edge like the other panels */
+  overflow: visible;
 }
 
 .hero-head {
@@ -59,10 +66,13 @@
 .tile--links { grid-column: span 2; background: var(--color-purple); }
 
 .hero-name {
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -1px;
+  font-family: var(--font-pixel);
+  /* the pixel face is wide: let long names break instead of widening the grid */
+  overflow-wrap: anywhere;
+  font-size: clamp(1.05rem, 2.6vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -99,28 +109,267 @@
   }
 }
 
-.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+/* ================= RPG-style panels ================= */
+.panel {
+  position: relative;
+  padding-top: calc(var(--space-tile) + 10px);
+}
+
+/* inner hairline frame, like a game window */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 2px solid rgba(17, 17, 17, 0.35);
+  pointer-events: none;
+}
+
+.panel-title {
+  position: absolute;
+  top: -2px;
+  left: 14px;
+  transform: translateY(-50%);
+  font-family: var(--font-pixel);
+  font-size: clamp(0.5rem, 1.1vw, 0.68rem);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-bg);
+  background: var(--color-ink);
+  border: 2px solid var(--color-ink);
+  padding: 7px 10px 6px;
+  margin: 0;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* ---- hero ---- */
+.hero-summary {
+  margin-top: 14px;
+  line-height: 1.6;
+}
+
+.stat-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 6.5em 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.stat-label {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.stat-bar {
+  height: 12px;
+  border: 2px solid var(--color-ink);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(17, 17, 17, 0.12) 0 2px,
+    transparent 2px 6px
+  );
+  padding: 1px;
+}
+
+.stat-bar i {
+  display: block;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-ink) 0 4px,
+    transparent 4px 6px
+  );
+}
+
+.stat-value {
+  font-size: 0.66rem;
+  color: rgba(17, 17, 17, 0.75);
+}
+
+/* ---- skills as an item list ---- */
+.skill-group + .skill-group {
+  margin-top: 12px;
+}
+
+.skill-group-name {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(17, 17, 17, 0.65);
+  margin-bottom: 6px;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
 
 .skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: var(--color-paper);
   border: 2px solid var(--color-ink);
   box-shadow: 3px 3px 0 var(--color-ink);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  padding: 3px 10px;
+  padding: 3px 9px 3px 6px;
 }
 
-.xp-item + .xp-item { margin-top: 20px; }
-.xp-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
-.xp-company { font-weight: 700; font-size: 1.05rem; }
-.xp-period { font-family: var(--font-mono); font-size: 0.85rem; }
-.xp-bullets { margin: 10px 0 0 20px; line-height: 1.6; font-size: 0.95rem; }
+.skill-chip {
+  width: 8px;
+  height: 8px;
+  background: var(--color-ink);
+  flex-shrink: 0;
+}
 
-.contact-row { font-size: 0.95rem; line-height: 1.9; overflow-wrap: anywhere; }
-.contact-row b { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+/* ---- experience as a quest-style list ---- */
+.xp-item + .xp-item {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 2px dashed rgba(17, 17, 17, 0.3);
+}
 
-.links-buttons { display: flex; flex-direction: column; gap: 12px; }
+.xp-head {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.xp-company {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.xp-cursor {
+  color: var(--color-ink);
+  margin-right: 8px;
+  font-size: 0.8em;
+}
+
+.xp-period {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  padding: 2px 7px;
+}
+
+.xp-bullets {
+  margin: 10px 0 0 22px;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.xp-bullets li {
+  list-style: none;
+  position: relative;
+}
+
+.xp-bullets li::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  background: var(--color-ink);
+}
+
+/* ---- contact as a menu ---- */
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 6px;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+  border-left: 8px solid transparent;
+  transition: border-color 120ms steps(2), background 120ms steps(2);
+}
+
+.menu-row:hover {
+  border-left-color: var(--color-ink);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.menu-key {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  min-width: 3.4em;
+}
+
+/* ---- education ---- */
+.edu-degree {
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+
+.edu-line {
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.edu-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.edu-gpa {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  padding: 2px 7px;
+}
+
+/* ---- links as menu entries ---- */
+.links-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-cursor {
+  opacity: 0;
+  margin-right: 6px;
+  transition: opacity 100ms steps(2);
+}
+
+.brutal-button:hover .menu-cursor,
+.brutal-button:focus-visible .menu-cursor {
+  opacity: 1;
+}
 
 .brutal-button {
   display: inline-block;

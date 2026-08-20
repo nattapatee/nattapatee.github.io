@@ -2,17 +2,23 @@ import { resume } from '../../data/resume'
 
 export function SkillsTile() {
   return (
-    <section className="tile tile--skills" aria-labelledby="skills-heading">
-      <h2 id="skills-heading">Skills</h2>
-      <div className="skill-tags">
-        {resume.skills.flatMap((group) =>
-          group.items.map((item) => (
-            <span className="skill-tag" key={`${group.category}-${item}`}>
-              {item}
-            </span>
-          )),
-        )}
-      </div>
+    <section className="tile tile--skills panel" aria-labelledby="skills-heading">
+      <h2 id="skills-heading" className="panel-title">
+        Skills
+      </h2>
+      {resume.skills.map((group) => (
+        <div className="skill-group" key={group.category}>
+          <p className="skill-group-name">{group.category}</p>
+          <div className="skill-tags">
+            {group.items.map((item) => (
+              <span className="skill-tag" key={item}>
+                <i className="skill-chip" aria-hidden="true" />
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
     </section>
   )
 }

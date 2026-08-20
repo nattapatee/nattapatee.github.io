@@ -13,6 +13,7 @@
 
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-pixel: 'Press Start 2P', var(--font-mono);
 
   --space-tile: clamp(16px, 2vw, 24px);
   --duration-pop: 350ms;
