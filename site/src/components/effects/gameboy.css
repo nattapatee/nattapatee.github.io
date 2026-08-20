@@ -291,23 +291,187 @@
 
 /* ---- zoom into the screen ---- */
 .gb-intro--zooming {
-  animation: gb-zoom 750ms steps(12) forwards;
-  transform-origin: 51% 38%;
+  animation: gb-zoom 850ms cubic-bezier(0.62, 0.01, 0.86, 0.4) forwards;
+  transform-origin: 50.5% 32.5%;
   pointer-events: none;
 }
 
 @keyframes gb-zoom {
   0% {
     transform: scale(1);
-    opacity: 1;
+    filter: brightness(1);
   }
-  75% {
-    transform: scale(8);
-    opacity: 1;
+  70% {
+    transform: scale(9);
+    filter: brightness(1.05);
   }
   100% {
-    transform: scale(12);
+    transform: scale(24);
+    filter: brightness(1.25);
+  }
+}
+
+/* logo clears the screen before the zoom lands, so the last frame is clean green */
+.gb-intro--zooming .gb-boot-logo,
+.gb-intro--zooming .gb-boot-tm {
+  animation: gb-logo-out 260ms steps(4) forwards;
+}
+
+@keyframes gb-logo-out {
+  to {
     opacity: 0;
+    transform: translateY(-14%);
+  }
+}
+
+/* ---- reveal: green screen washes out into the page ---- */
+.gb-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  pointer-events: none;
+  background: #9db34c;
+  animation: gb-dissolve 600ms steps(7) forwards;
+}
+
+@keyframes gb-dissolve {
+  0% {
+    opacity: 1;
+    filter: brightness(1.25);
+  }
+  45% {
+    opacity: 0.75;
+    filter: brightness(1.5);
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(2);
+  }
+}
+
+/* the page waits behind the intro, then plays its entrance on reveal */
+.app-waiting .bento,
+.app-waiting .parade {
+  opacity: 0;
+}
+
+.app-waiting .bento .tile {
+  animation: none !important;
+}
+
+/* ---- floating Game Boy menu ---- */
+.gb-menu-wrap {
+  position: fixed;
+  right: clamp(14px, 3vw, 28px);
+  bottom: clamp(14px, 3vw, 28px);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.gb-menu-fab {
+  width: clamp(56px, 7vw, 74px);
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(5px 6px 0 rgba(0, 0, 0, 0.6));
+  transition: transform 160ms steps(3);
+}
+
+.gb-menu-fab:hover,
+.gb-menu-fab:focus-visible {
+  transform: translateY(-5px) rotate(-4deg);
+  outline: none;
+}
+
+.gb-menu-fab:focus-visible {
+  outline: 3px dashed var(--color-ink);
+  outline-offset: 4px;
+}
+
+.gb-menu-fab:active {
+  transform: translateY(2px) rotate(0deg);
+}
+
+.gb-menu {
+  min-width: 210px;
+  background: #9db34c;
+  border: 3px solid #111;
+  box-shadow: 6px 6px 0 #111;
+  padding: 10px;
+  font-family: var(--font-mono);
+  animation: gb-menu-in 180ms steps(3);
+}
+
+@keyframes gb-menu-in {
+  from {
+    transform: translateY(8px) scaleY(0.8);
+    opacity: 0;
+  }
+}
+
+.gb-menu-title {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #1b3a1b;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+
+.gb-menu-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background: #b8cc68;
+  border: 2px solid #111;
+  color: #1b3a1b;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 7px 9px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.gb-menu-item + .gb-menu-item {
+  margin-top: 6px;
+}
+
+.gb-menu-item:not(:disabled):hover,
+.gb-menu-item:not(:disabled):focus-visible {
+  background: #ffde59;
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 #111;
+  outline: none;
+}
+
+.gb-menu-item--now-playing {
+  background: #ffde59;
+  cursor: default;
+}
+
+.gb-menu-item--soon {
+  background: #7e9138;
+  color: #364d1c;
+  cursor: not-allowed;
+}
+
+.gb-menu-tag {
+  font-size: 0.52rem;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+@media print {
+  .gb-menu-wrap,
+  .gb-reveal {
+    display: none !important;
   }
 }
 

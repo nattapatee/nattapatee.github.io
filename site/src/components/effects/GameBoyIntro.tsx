@@ -3,11 +3,12 @@ import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { GbConsoleArt } from './GbConsoleArt'
 import './gameboy.css'
 
-type Phase = 'shelf' | 'inserting' | 'booting' | 'zooming' | 'done'
+type Phase = 'shelf' | 'inserting' | 'booting' | 'zooming' | 'reveal' | 'done'
 
 const INSERT_MS = 450
 const BOOT_MS = 1800
-const ZOOM_MS = 750
+const ZOOM_MS = 850
+const REVEAL_MS = 600
 
 const CARTRIDGES = [
   { id: 'resume', label: 'RESUME', ready: true },
@@ -38,10 +39,23 @@ function playClunkThenDing() {
   }
 }
 
-export function GameBoyIntro() {
+interface GameBoyIntroProps {
+  onDone?: () => void
+}
+
+export function GameBoyIntro({ onDone }: GameBoyIntroProps) {
   const reduced = useReducedMotion()
   const [phase, setPhase] = useState<Phase>(() => (reduced ? 'done' : 'shelf'))
   const soundPlayed = useRef(false)
+  const doneNotified = useRef(false)
+
+  useEffect(() => {
+    // the page behind the intro starts its entrance while the green screen dissolves
+    if ((phase === 'reveal' || phase === 'done') && !doneNotified.current) {
+      doneNotified.current = true
+      onDone?.()
+    }
+  }, [phase, onDone])
 
   useEffect(() => {
     if (phase === 'shelf' || phase === 'done') return
@@ -52,7 +66,8 @@ export function GameBoyIntro() {
     const nextByPhase: Record<Exclude<Phase, 'shelf' | 'done'>, [Phase, number]> = {
       inserting: ['booting', INSERT_MS],
       booting: ['zooming', BOOT_MS],
-      zooming: ['done', ZOOM_MS],
+      zooming: ['reveal', ZOOM_MS],
+      reveal: ['done', REVEAL_MS],
     }
     const [next, delay] = nextByPhase[phase]
     const timer = setTimeout(() => setPhase(next), delay)
@@ -70,6 +85,10 @@ export function GameBoyIntro() {
   }, [phase])
 
   if (phase === 'done') return null
+
+  if (phase === 'reveal') {
+    return <div className="gb-reveal" aria-hidden="true" />
+  }
 
   return (
     <div className={`gb-intro gb-intro--${phase}`} role="dialog" aria-label="Retro intro — press Escape to skip">
