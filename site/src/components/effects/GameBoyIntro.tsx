@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { GbConsoleArt } from './GbConsoleArt'
+import { GbShelfScene } from './GbShelfScene'
 import './gameboy.css'
 
 type Phase = 'shelf' | 'inserting' | 'booting' | 'zooming' | 'reveal' | 'done'
@@ -9,12 +10,6 @@ const INSERT_MS = 450
 const BOOT_MS = 1800
 const ZOOM_MS = 850
 const REVEAL_MS = 600
-
-const CARTRIDGES = [
-  { id: 'resume', label: 'RESUME', ready: true },
-  { id: 'gallery', label: 'GALLERY', ready: false },
-  { id: 'mystery', label: '???', ready: false },
-]
 
 function playTone(freq: number, at: number, dur: number, gainValue: number, ctx: AudioContext) {
   const osc = ctx.createOscillator()
@@ -92,27 +87,7 @@ export function GameBoyIntro({ onDone }: GameBoyIntroProps) {
 
   return (
     <div className={`gb-intro gb-intro--${phase}`} role="dialog" aria-label="Retro intro — press Escape to skip">
-      {phase === 'shelf' && (
-        <div className="gb-shelf-scene">
-          <p className="gb-shelf-title">PICK A CARTRIDGE</p>
-          <div className="gb-shelf">
-            {CARTRIDGES.map((cart) => (
-              <button
-                key={cart.id}
-                type="button"
-                className={`gb-cart gb-cart--${cart.ready ? 'ready' : 'empty'}`}
-                onClick={cart.ready ? () => setPhase('inserting') : undefined}
-                disabled={!cart.ready}
-              >
-                <span className="gb-cart-notch" />
-                <span className="gb-cart-label">{cart.label}</span>
-                {!cart.ready && <span className="gb-cart-soon">COMING SOON</span>}
-              </button>
-            ))}
-          </div>
-          <p className="gb-shelf-hint">▶ click RESUME to play</p>
-        </div>
-      )}
+      {phase === 'shelf' && <GbShelfScene onPick={() => setPhase('inserting')} />}
 
       {phase !== 'shelf' && (
         <div className="gb-console-scene">
