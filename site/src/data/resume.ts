@@ -33,9 +33,9 @@ export interface Resume {
 
 export const resume: Resume = {
   name: 'Nattapat Ekapobyothin',
-  nickname: 'Tee',
+  nickname: 'Mark',
   role: 'Software Developer',
-  // TODO(tee): confirm summary — drafted from old resume objective
+  // TODO(mark): confirm summary — drafted from old resume objective
   summary:
     'Software developer focused on frontend and document-management systems. ' +
     'Building web applications with React, TypeScript and .NET for enterprise clients.',
@@ -82,7 +82,7 @@ export const resume: Resume = {
     {
       company: 'Freelance',
       role: 'Full-stack Developer (side projects)',
-      // TODO(tee): confirm freelance start period
+      // TODO(mark): confirm freelance start period
       period: '2026 — Present',
       bullets: [
         'Built a custom inventory management system (IMS) for a private client — .NET clean architecture (API / Application / Domain / Infrastructure) with unit and integration tests, database migrations and Docker deployment.',
@@ -92,7 +92,7 @@ export const resume: Resume = {
     {
       company: 'B Circle Co., Ltd.',
       role: 'Software Developer',
-      // TODO(tee): confirm still current, or add end date + newer jobs above this one
+      // TODO(mark): confirm still current, or add end date + newer jobs above this one
       period: 'Mar 2019 — Present',
       bullets: [
         'Built a document management custom UI for Thai Life Insurance — React, Ant Design, Alfresco, Keycloak, PDF.js/pdf-lib with docx and pptx preview, deployed with Docker.',
